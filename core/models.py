@@ -9,10 +9,13 @@ class Evento(models.Model):
     descricao = models.TextField(blank=True, null=True)
     data_evento = models.DateTimeField(verbose_name='Data do Evento') # verbose_name , serve para customizar como será exibido no Banco de Dados
     data_criacao = models.DateTimeField(auto_now=True) #insere a data atual
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE) # aqui se o usuario dono do evento for excluido, este comando exclui todos os eventos dele.
 
     class Meta:
         db_table = 'evento'
 
     def __str__(self):
         return self.titulo
+
+    def get_data_evento(self):
+        return self.data_evento.strftime('%d/%m/%y -  %H:%M Hrs')
